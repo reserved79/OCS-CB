@@ -19,8 +19,8 @@ def ocs_cb(X_train, X_validation, Y_train, Y_validation):
         }
         model = CatBoostClassifier(**params, verbose=False)
         model.fit(train_pool, eval_set=test_pool)
-        result = cross_val_score(model, X_train, Y_train, cv=5, scoring='recall')
-        fitness = -result.mean()
+        prediction_cb = model.predict(X_train)
+        fitness = -recall_score(Y_train, prediction_cb)
         return fitness
 
 
